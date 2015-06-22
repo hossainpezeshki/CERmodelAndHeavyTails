@@ -155,37 +155,37 @@ legend (x=2010, y=-0.2, legend=c("location", "scale"), lty=c(1,1),
 col=c('red', 'aquamarine4'), pch=c(NA,NA))
 
 acf (QQQ$trend$zt^2, xlab="lags in months", ylab="correlation of (residuals)^2",
-main="Autocorrelation of QQQ (z_t)^2 process"); grid()
+main="Autocorrelation of QQQ (zeta_t)^2 process"); grid()
 ```
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 Comparing the latter autocorrelation plot with the earlier one above, we observe a considerable
-mitigation of the dependence of the residuals $z_t$, which we now test for Gaussianness.
+mitigation of the dependence of the residuals $\widehat{\zeta_t}$, which we now test for Gaussianness.
 
 ```r
 if (jarque.bera.test(QQQ$trend$zt)$statistic > qchisq (p=0.95, df=2)) {
-	cat ("The residuals z_t are not Gaussian (CL=0.95)\n")
+	cat ("The residuals zeta_t are not Gaussian (CL=0.95)\n")
 } else {
-	cat ("Can not reject Gaussianness of z_t\n")
+	cat ("Can not reject Gaussianness of zeta_t\n")
 }
 ```
 
 ```
-## The residuals z_t are not Gaussian (CL=0.95)
+## The residuals zeta_t are not Gaussian (CL=0.95)
 ```
-Let us fit a $t_{\nu}$ model to $z_t$'s:
+Let us fit a $t_{\nu}$ model to $\zeta_t$'s:
 
 
 ```r
 QQQ$ztfit <- get.tparams.only (QQQ$trend$zt, lower=2.1, upper=56)
-sprintf ("the residuals z_t fit t(df=%.3f)", QQQ$ztfit$nu)
+sprintf ("the residuals zeta_t fit t(df=%.3f)", QQQ$ztfit$nu)
 ```
 
 ```
-## [1] "the residuals z_t fit t(df=56.000)"
+## [1] "the residuals zeta_t fit t(df=56.000)"
 ```
-We note that whereas the QQQ $\epsilon_t$'s above were $t_{\nu\approx 3.356}$, the $z_t$'s
-are $t_{\nu\approx 56}$; we recall that for large $\nu$, $t_\nu$ approches the Gaussian
+We note that whereas the QQQ $\epsilon_t$'s above were $t_{\nu= 3.356}$, the $\zeta_t$'s
+are $t_{\nu= 56}$; we recall that for large $\nu$, $t_\nu$ approches the Gaussian
 as the following plot helps visualize. We thus wonder whether the Jarque-Berta test is
 excessively sensitive.
 
@@ -232,25 +232,25 @@ Let us examine the XEG.TO residuals $\zeta_t$ more closely.
 
 ```r
 if (jarque.bera.test (XEG.TO$trend$zt)$statistic > qchisq (p=0.95, df=2)) { # page 86 of Ruppert
-  cat ("The z_t residuals of XEG.TO are not Gaussian (CL=0.95)\n")
+  cat ("The zeta_t residuals of XEG.TO are not Gaussian (CL=0.95)\n")
 } else {
-	cat ("Cannot reject Gaussianness of XEG.TO z_t process")
+	cat ("Cannot reject Gaussianness of XEG.TO zeta_t process")
 }
 ```
 
 ```
-## The z_t residuals of XEG.TO are not Gaussian (CL=0.95)
+## The zeta_t residuals of XEG.TO are not Gaussian (CL=0.95)
 ```
 Let us fit a $t_{\nu}$ distribution to the residuals $\zeta_t$.
 
 ```r
 XEG.TO$ztfit <- get.tparams.only (XEG.TO$trend$zt, lower=2.1, upper=50)
-sprintf ("t dist fit to z_t residuals of XEG.TO df = %.3f, location=%.6f, scale=%.6f",
+sprintf ("t dist fit to zeta_t residuals of XEG.TO df = %.3f, location=%.6f, scale=%.6f",
          XEG.TO$ztfit$nu, XEG.TO$ztfit$Location, XEG.TO$ztfit$Scale)
 ```
 
 ```
-## [1] "t dist fit to z_t residuals of XEG.TO df = 6.395, location=0.109226, scale=1.725168"
+## [1] "t dist fit to zeta_t residuals of XEG.TO df = 6.395, location=0.109226, scale=1.725168"
 ```
 That is, for XEG.TO, the $\zeta_t$'s fit $t_{\nu=6.395}$, whereas the $\epsilon_t$'s
 fit $t_{\nu=6.290}$, so that only a small part of the heaviness of the tails of the distribution
