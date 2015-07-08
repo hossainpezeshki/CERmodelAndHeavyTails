@@ -19,8 +19,7 @@ isIID <- function (x, CL=0.95)  {
   ans <- bestPerBin (N=N)
   
   lu <- defmacro (j, b, expr={
-    l = b*(j-1)+1; u = b*j;
-    c(l:u)
+    c((b*(j-1)+1):(b*j))
   })
   
   
